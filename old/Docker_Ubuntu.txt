@@ -1,0 +1,1 @@
+docker run --runtime nvidia --rm -it -v "c:/Users/psamt/OneDrive - The University of Nottingham/_Spring/PHYS4036_Machine Learning in Science Part II/Project":/kaggle/working gcr.io/kaggle-gpu-images/python /bin/bash
