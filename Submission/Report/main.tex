@@ -116,6 +116,10 @@ There were 13.8k RGB images of resolution 240 x 320 provided with the correspond
 \paragraph{Data cleaning}
 In order to clean the dataset, first I wrote a Python script to read all the images, to handle errors, and to remove image files that caused errors. After that I ensured all the labels were within the range of [0, 1], and each record contained complete labels for both steering angle and speed.
 
+\paragraph{Training set and test set}
+\label{sec:train_test_split}
+The data were split into training set and test set, with a ratio of 0.85 : 0.15, using explicitly defined random seeds to assure the reproducibility of the results, and the ratio between classes in both sets was approximately the same.
+
 \paragraph{Data distribution}
 I visualised the data distribution in Figure \ref{fig:angle_speed_distribution}. It shows that the distribution of steering angles is left-skewed and non-uniform, and the distribution of speeds is imbalanced, roughly 25:75.
 
@@ -125,9 +129,6 @@ I visualised the data distribution in Figure \ref{fig:angle_speed_distribution}.
   \caption{Distribution of steering angles and speeds in the dataset.}
   \label{fig:angle_speed_distribution}
 \end{figure}
-
-\paragraph{Training set and test set}
-I split the data into training set and test set, with a ratio of 0.85 : 0.15, using explicitly defined random seeds to assure the reproducibility of the results, and the ratio between classes in both sets was approximately the same.
 
 \paragraph{Data balancing}
 Given the severe class imbalance in steering angle, I applied a combination of oversampling and undersampling to the dataset, leading to a ratio between a minority and a majority class of approximately 0.22 : 0.78. The above ratio was chosen carefully for several reasons:
@@ -169,6 +170,8 @@ To increase the data variety and improve the generalisability of the model, I ap
 \end{figure}
 
 \subsubsection{Modelling}
+The steering angle model and the speed model were trained separately.
+
 Transfer learning was used to train the models. The base model for both the steering angle and speed models was pre-trained on MobileNetV3Large, which provided a good balance between feature extracting complexity and efficiency. The base model was frozen to prevent overfitting. Each model was followed by 10 heads - sub-models that took the features extracted from the base model as the input and outputted the steering angle or speed. These heads had different structures, which could include convolutional layers, global average pooling layer, flatten layer, fully connected layers, and dropout layers. The use of varied head architectures aimed to capture diverse features from the images, thereby increasing model generalisability and improving prediction accuracy.
 
 Figure \ref{fig:angle_heads} and Figure \ref{fig:speed_heads} show the structure of the heads.
@@ -211,7 +214,7 @@ The models were trained using the following loss functions:
 During the training of the steering angle models, the training data was randomly selected and augmented from the training set every epoch to reduce the risk of overfitting and introduce diversity of augmented images and undersampled classes.
 
 
-\paragraph{Prediction}
+\subsubsection{Prediction}
 To further increase the generalisability of the predictions, 4 models were trained with different random seeds for the train/test split. As a result, each image had \( 4 \times 10 = 40 \) predicted values for the steering angle and the speed. The predicted values were then averaged to obtain the prediction.
 
 A threshold \(\text{speed}_\text{threshold}\) was introduced to the speed prediction to reduce the mean squared error (MSE) and was tuned using the test set. The speed prediction was adjusted as follows:
@@ -246,9 +249,46 @@ A manual inspection was carried out on the predictions with high variance betwee
   \label{fig:speed_heads}
 \end{figure}
 
+
 \subsection{Live test}
+The live test performance was assessed by the PiCar's ability to complete a variety of tasks, such as driving along the road and stopping on pedestrians or obstacles ahead. The trained model was loaded onto a pre-build PiCar. 
 
+\subsubsection{Training data}
 
+\paragraph{Data collection and data cleaning}
+To maintain the consistency of the training data's driving logic, 16.8k driving data was collected from scratch. The data was collected in the following ways:
+\begin{itemize}
+  \item Capture the PiCar's video feed and control signals while driving along all three maps according to the rules \citep{Kaggle}.
+  \item Train the model on the collected data and deploy the model to the PiCar.
+  \item Collect more data to reinforce the weak points. E.g.: 
+  \begin{itemize}
+    \item Collect more data of turning left in the oval track if the PiCar turned left poorly.
+    \item Collect more data of stopping on pedestrians when turning if the PiCar did not stop on pedestrians in a turn.
+    \item Collect more data of stopping at a red light if the PiCar did not stop at a red light.
+  \end{itemize} 
+  \item Retrain the model on the collected data and deploy the model to the PiCar.
+  \item Repeat steps 3 and 4 until the PiCar's performance is good enough.
+\end{itemize}
+
+The data was collected in batches. Data cleaning was done immediately after each batch to ensure the collected dataset was clean by manually inspecting and removing the improper images, such as cached images and images with wrong labels. 
+
+Images were further labelled manually for additional information, such as red light, green light, no lights, left arrow, right arrow, etc. 
+
+\paragraph{Training set and test set}
+Same as Section \ref{sec:train_test_split}.
+
+\paragraph{Data distribution}
+The dataset is divided into two subsets: a subset for angle prediction and a subset for speed prediction. 
+
+\paragraph{Data augmentation}
+
+\subsubsection{Modelling}
+
+\subsubsection{Structures and hyperparameters}
+
+\subsubsection{Training}
+
+\subsubsection{Prediction}
 
 \section{Results}
 

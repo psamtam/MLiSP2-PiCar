@@ -4,6 +4,7 @@ Dataset/
 *.pkl
 *.keras
 *.h5
+Captured_data/old/
 
 
 
