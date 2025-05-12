@@ -1,13 +1,13 @@
 # Fdb version 4
-["bibtex main"] 1746821158.42348 "main.aux" "main.bbl" "main" 1746821180.83574 0
+["bibtex main"] 1746823206.47247 "main.aux" "main.bbl" "main" 1746824357.5306 0
   "./references.bib" 1746049393 956 5a3713fd5290c6116da580c0ac76977e ""
   "C:/Users/psamt/AppData/Local/Programs/MiKTeX/bibtex/bst/natbib/plainnat.bst" 1284455456 26816 ffe5423d2019860bad9f54bc402fac15 ""
-  "main.aux" 1746821180 14684 bad7496322f7cec33916d316f9a1473e "pdflatex"
+  "main.aux" 1746824355 14684 cb0286e21b30131ab5bac078e9ce6496 "pdflatex"
   (generated)
   "main.bbl"
   "main.blg"
   (rewritten before read)
-["pdflatex"] 1746821176.93966 "c:/Users/psamt/OneDrive - The University of Nottingham/_Spring/PHYS4036_Machine Learning in Science Part II/Project/Submission/Report/main.tex" "main.pdf" "main" 1746821180.83641 0
+["pdflatex"] 1746824351.99846 "c:/Users/psamt/OneDrive - The University of Nottingham/_Spring/PHYS4036_Machine Learning in Science Part II/Project/Submission/Report/main.tex" "main.pdf" "main" 1746824357.5316 0
   "C:/Users/psamt/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1746624763 83358 a8328cf182cf32ae8c92cd2e930e6977 ""
   "C:/Users/psamt/AppData/Local/MiKTeX/fonts/pk/ljfour/jknappen/ec/dpi600/ectt1000.pk" 1742756199 20028 8c23d170a0c2070050759cfac66e90ff ""
   "C:/Users/psamt/AppData/Local/MiKTeX/miktex/data/le/pdftex/pdflatex.fmt" 1738164083 12013393 c813f993de1afd98d2faa103fb43b571 ""
@@ -117,7 +117,7 @@
   "C:/Users/psamt/AppData/Local/Programs/MiKTeX/tex/latex/units/nicefrac.sty" 1469029150 4163 0462ee5ab265cf59dc15a41a3b883101 ""
   "C:/Users/psamt/AppData/Local/Programs/MiKTeX/tex/latex/url/url.sty" 1388490452 12796 8edb7d69a20b857904dd0ea757c14ec9 ""
   "C:/Users/psamt/AppData/Local/Programs/MiKTeX/tex/latex/xcolor/xcolor.sty" 1729265222 55384 b454dec21c2d9f45ec0b793f0995b992 ""
-  "c:/Users/psamt/OneDrive - The University of Nottingham/_Spring/PHYS4036_Machine Learning in Science Part II/Project/Submission/Report/main.tex" 1746821176 35865 14f300d520befed47651d7b0f0f5a023 ""
+  "c:/Users/psamt/OneDrive - The University of Nottingham/_Spring/PHYS4036_Machine Learning in Science Part II/Project/Submission/Report/main.tex" 1746824351 35737 7231fcdf61c34d0f6b5f91d1f10370d4 ""
   "figures/angle_heads.png" 1746280678 551825 26bdcdbb33eee793097ad8345f09bdda ""
   "figures/angle_model_error.pdf" 1746632629 350552 a011e93074cb65d2e92761adaa8fba69 ""
   "figures/angle_speed_distribution.pdf" 1746268438 13729 9675a86dfa0b8b52db7878ea3e93172b ""
@@ -142,10 +142,10 @@
   "figures/speed_cm.pdf" 1746633060 15598 86f14eb9fa070350f3e953fefd876386 ""
   "figures/speed_heads.png" 1746280950 551944 aabf5e57b7f577769bf4295bc49a6ba0 ""
   "figures/speed_throshold_vs_mse.pdf" 1746633060 11116 bd3d12e06f460ca2fbf19536a681bcf2 ""
-  "main.aux" 1746821180 14684 bad7496322f7cec33916d316f9a1473e "pdflatex"
-  "main.bbl" 1746821158 1045 b1b3256e22bca573b7ceb18ef8b5b5f3 "bibtex main"
-  "main.out" 1746821180 3006 7918c170b0c17fa5c36da537f9c730aa "pdflatex"
-  "main.tex" 1746821176 35865 14f300d520befed47651d7b0f0f5a023 ""
+  "main.aux" 1746824355 14684 cb0286e21b30131ab5bac078e9ce6496 "pdflatex"
+  "main.bbl" 1746823207 1045 b1b3256e22bca573b7ceb18ef8b5b5f3 "bibtex main"
+  "main.out" 1746824355 3006 7918c170b0c17fa5c36da537f9c730aa "pdflatex"
+  "main.tex" 1746824351 35737 7231fcdf61c34d0f6b5f91d1f10370d4 ""
   "neurips_2024.sty" 1745952416 11627 7a7d3e2ec6b5644566a30c120e785a04 ""
   (generated)
   "main.aux"

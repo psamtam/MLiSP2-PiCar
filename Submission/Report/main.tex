@@ -72,11 +72,11 @@
 
 
 \begin{abstract}
-  This project aims to develop machine learning models to predict the speed and steering angle of images captured by Raspberry Pi cars. The project is divided into two parts: an online challenge and a live test. Models with convolutional and fully connected layers were developed using transfer learning. They ranked first in the online challenge and demonstrated strong performance. In the live test, the model completed 70\% of the tasks, including flawless lane following and stop-on-object, though some challenges remain. Future studies could focus on enhancing data collection for better generalisability.
+  This project aims to develop machine learning models to predict the speed and steering angle of images captured by Raspberry Pi cars. The project is divided into two parts: an online challenge and a live test. Models with convolutional and fully connected layers were developed using transfer learning. They ranked first in the online challenge and demonstrated strong performance. In the live test, the model completed 70\% of the tasks, including flawless lane following and stop-on-object, but faced challenges. Future work could improve data collection for better generalization.
 \end{abstract}
 
 \section{Introduction}
-Autonomous driving has rapidly advanced in the field of artificial intelligence (AI). Numerous companies have been founded with the goal of developing reliable self-driving systems \citep{Law_2023}. Hands-on experience is valuable for learning real-word AI applications.
+Autonomous driving is advancing in the field of artificial intelligence (AI). Numerous companies have been founded with the goal of developing reliable self-driving systems \citep{Law_2023}. Hands-on experience is valuable for learning real-word AI applications.
 
 PiCar \citep{SunFounder} is a small robot car equipped with an onboard camera to capture forward-facing perspective of the car's environment, and a Raspberry Pi (RPi) single-board computer \citep{RaspberryPi} for real-time computation. The captured image frames can be used as input to machine learning models running on the RPi that predict control signals, including steering angle and speed, of the car.
 
@@ -118,10 +118,10 @@ There were 13.8k RGB images of resolution 240 x 320 provided with the correspond
 \end{figure}
 
 \paragraph{Data cleaning}
-I cleaned the dataset using a script that removed faulty files and ensured labels' validity and completeness. I also manually inspected data that were wrongly classified by the model.
+Python scripts were used to removed faulty files and ensured labels' validity and completeness. I also manually inspected data that were wrongly classified by the model.
 
 \paragraph{Data distribution}
-I visualised the data distribution in Figure \ref{fig:angle_speed_distribution}. It shows that the distribution of steering angles is left-skewed and non-uniform, and the distribution of speeds is imbalanced, roughly 25:75.
+I visualised the data distribution in Figure \ref{fig:angle_speed_distribution}. The distribution of steering angles is left-skewed and non-uniform, and the distribution of speeds is imbalanced, roughly 25:75.
 
 \begin{figure}[h]
   \centering
@@ -152,7 +152,7 @@ Figure \ref{fig:angle_speed_distribution_balanced} shows the distribution of ste
 
 \paragraph{Data augmentation}
 \label{sec:data_augmentation}
-To mimic real-world conditions, I augmented the training data in lighting and camera angle variations. The augmentations were applied randomly, as listed in Table \ref{tab:data_augmentation}. Figure \ref{fig:augmentation} shows some samples of the augmentation.
+Training data were randomly augmented, as listed in Table \ref{tab:data_augmentation}, to mimic real-world conditions such as lighting and camera angle variations. Figure \ref{fig:augmentation} shows some samples of the augmentation.
 
 \begin{table}[H]
   \centering
@@ -191,7 +191,7 @@ The image pixels were normalised to range of [-1, 1], matching the input range o
 \subsubsection{Modelling}
 The steering angle model and the speed model were trained separately.
 
-Transfer learning was used to train the models. The base model for both the steering angle and speed models was pre-trained on MobileNetV3Large, which provided a good balance between feature extracting complexity and efficiency. The base model was frozen to prevent overfitting. Each model was followed by 10 heads - sub-models that took the features extracted from the base model as the input and outputted the steering angle or speed. The use of varied head architectures aimed to capture diverse features from the images, thereby increasing model generalisability and improving prediction accuracy.
+Transfer learning was used to train the models. The base model for both the steering angle and speed models was pre-trained on MobileNetV3Large, which provided a good balance between feature extracting complexity and efficiency. The base model was frozen to prevent overfitting. Each model had 10 heads - sub-models that took the features extracted from the base model as the input and outputted the steering angle or speed. The use of varied head architectures aimed to capture diverse features from the images, thereby increasing model generalisability and improving prediction accuracy.
 
 Figure \ref{fig:angle_heads} and Figure \ref{fig:speed_heads} show the structure of the heads.
 
@@ -224,7 +224,7 @@ The hyperparameters of the layers in the models were chosen and tuned manually b
 
 \paragraph{Training}
 
-The models were trained for 50 epochs with batch size of 64 and Adam optimiser with decaying learning rate:
+Models were trained for 50 epochs with batch size of 64 and Adam optimiser with decaying learning rate:
 \begin{equation}
   \begin{aligned}
     \text{learning\_rate} =
@@ -242,7 +242,7 @@ This strategy kept the first epochs' learning rate high to improve convergence r
 
 Table \ref{tab:loss_functions} shows the loss functions used in training the models.
 
-\begin{table}[h]
+\begin{table}[H]
   \centering
   \renewcommand{\arraystretch}{1.2}
   \begin{tabular}{|l|l|}
@@ -263,7 +263,7 @@ The loss function's weights were calculated using inverse square root of the num
   \text{weight}_c = \frac{1}{\sqrt{\text{number of instances in class}_c}}
   \label{eq:inverse_square_root}
 \end{equation}
-The resulting weights were then normalised so that the minimum weight was 1.
+The resulting weights were then normalised with a minimum of 1.
 
 During the training of the steering angle models, the training data were randomly selected and augmented from the training set every epoch to reduce the risk of overfitting and introduce diversity of augmented images and undersampled classes.
 
@@ -285,7 +285,7 @@ A threshold \(\text{speed}_\text{threshold}\) was introduced to the speed predic
   \end{aligned}
 \end{equation}
 
-I manually inspected the predictions with high variance between the 40 predicted values to remove clearly incorrect predictions.
+Predictions with high variance between the 40 predicted values were inspected manually to remove clearly incorrect predictions.
 
 
 
@@ -306,7 +306,7 @@ I manually inspected the predictions with high variance between the 40 predicted
 
 \subsection{Live test}
 
-The live test assessed the PiCar’s ability to complete tasks like lane following and stop when obstacles ahead on three maps - oval, figure-of-eight, and T-junction. The trained model was deployed.
+The live test assessed the PiCar’s ability to complete tasks like lane following and stop when obstacles ahead on three maps - oval, figure-of-eight, and T-junction. The trained model was deployed to the PiCar.
 
 \subsubsection{Training data}
 
@@ -314,13 +314,13 @@ The live test assessed the PiCar’s ability to complete tasks like lane followi
 To ensure consistent driving logic in the training data, 16.8k driving data were collected from scratch. The data were collected in the following ways:
 \begin{itemize}
   \item Capture the PiCar's video feed and control signals while driving along all three maps in accordance with the rules outlined in \citep{Kaggle}.
-  \item Train the model on the collected data and deploy the model to the PiCar.
+  \item Train the model on the concat data and deploy the model to the PiCar.
   \item Additional data were collected to address the model's weak points. E.g.:
         \begin{itemize}
           \item Collect more data of turning left if the PiCar turned left poorly.
           \item Collect more data of stopping at a red light if the PiCar did not stop at a red light.
         \end{itemize}
-  \item Retrain the model on the collected data and deploy the model to the PiCar.
+  \item Retrain the model on the concatenated dataset and deploy the model to the PiCar.
   \item Repeat steps 3 and 4 until the PiCar achieved satisfactory performance.
 \end{itemize}
 
@@ -394,7 +394,7 @@ Figure \ref{fig:live_test_heads} shows the structure of the merged model's heads
 The structures and the hyperparameters of the heads were mostly the same as described in Section \ref{sec:structures_and_hyperparameters}. However, the output layer of the speed model was changed to three output nodes with a Softmax activation to account for the three classes - normal, red light, and object ahead. The arrow and the "turn on arrow" models also had an output layer with 3 output nodes with a Softmax activation. The outputs represented left, right, or neither.
 
 \paragraph{Training}
-The models were trained for 40 epochs with frozen neck weights, batch size of 64, and Adam optimiser with decaying learning rate as described in Equation \ref{eq:learning_rate}. An additional 10 epochs were followed, with unfrozen neck weights. 
+The models were trained for 40 epochs with frozen neck weights, batch size of 64, and Adam optimiser with decaying learning rate as described in Equation \ref{eq:learning_rate}. An additional 10 epochs followed, with unfrozen neck weights. 
 
 The models' loss functions were listed in Table \ref{tab:live_test_loss_functions}.
 
@@ -413,7 +413,7 @@ The models' loss functions were listed in Table \ref{tab:live_test_loss_function
   \label{tab:live_test_loss_functions}
 \end{table}
 
-The loss functions' class weights were calculated using inverse square root of the number of instances in each class, as shown in Equation \ref{eq:inverse_square_root}. The resulting weights were then normalised so that the minimum weight within each model's set of weights was 1.
+The loss functions' class weights were calculated using inverse square root of the number of instances in each class, as shown in Equation \ref{eq:inverse_square_root}. The resulting weights were then normalised to a minimum weight of 1 for each model.
 
 \subsubsection{Prediction}
 Predictions were obtained by averaging.
@@ -442,7 +442,7 @@ The output speed was set to 1 if the speed prediction is normal. Otherwise, the 
 \section{Results}
 
 \subsection{Online challenge}
-The final model achieved MSEs of 0.00917 and 0.01127 on the public and private leaderboards respectively, ranked first on both.
+The final model achieved MSEs of 0.00917 and 0.01127 on the public and private leaderboards respectively, ranked first on both leaderboards.
 
 In the training phase, the speed model achieved an MSE of 0.0073 and 0.0103 on the training and test set respectively. Figure \ref{fig:speed_model_eval} and \ref{fig:angle_model_error} shows evaluation results on the test set.
 
@@ -651,7 +651,7 @@ This inconsistency may be due to the model's difficulty in capturing and disting
 \subsection{Design decisions}
 In the online challenge, multiple multi-head models were used to produce the final prediction. Each head had a slightly different structure, allowing for a more diverse interpretation of the extracted feature from the shared pre-trained backbone. Additionally, training multiple models on different subsets of the training data further increased the diversity of the learned representations. These choices improved generalisability and accuracy stability.
 
-In the live test model, a smaller pre-trained base model was chosen to reduce the inferencing time on the Raspberry Pi (RPi) single-board computer. This improved the reliability of real-time processing by providing more computational headroom, helping to counter the fluctuating inference speed - which occasionally ranged from 70 ms to 150 ms despite the CPU not being fully utilised or thermally throttled. Combining the models into a multi-head architecture with a shared backbone, and converting resulted model into a TFLite model for deployment on the PiCar, also improved inferencing efficiency.
+In the live test model, a smaller pre-trained base model was chosen to reduce the inferencing time on the Raspberry Pi (RPi) single-board computer. This improved the reliability of real-time processing by providing more computational headroom, helping to counter the fluctuating inference speed - which occasionally ranged from 70 ms to 150 ms despite the CPU not being fully utilised or thermally throttled. Combining the models into a multi-head architecture with a shared backbone, and converting resulted model into a TFLite model for deployment on the PiCar, improved inferencing efficiency.
 
 \subsection{Iterative data collection in live test phase}
 The iterative data collection during the live test phase helped reinforce the model's weaknesses by targeting the failure cases observed during deployment. For example, if the PiCar failed to stop at the red lights or struggled to detect pedestrians ahead, additional data were collected specifically for those scenarios. This approach improved the model's robustness and allowed it to generalise better across edge cases. However, these reinforcements altered the previous dataset's class distribution, requiring the data balancing parameters to be re-tuned after each iteration.
